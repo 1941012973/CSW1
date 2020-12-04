@@ -1,13 +1,17 @@
 import java.util.Scanner;
-import java.lang.Math; 
+import java.lang.Math;
+import java.io.*;
 
 class Main {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		int num_payments;
 		int Principle;
+		
 		float InterestRate;
-		float i, n, p;
-		float PaymentAmount;    
+		float i, n;
+		
+		double p;
+		double PaymentAmount;    
 		
 		Scanner sc = new Scanner(System.in);
 		System.out.print("Enter the amount of load > ");
@@ -26,13 +30,16 @@ class Main {
 		n = num_payments;
 		p = Principle;
 		
+		FileWriter fw = new FileWriter("output.txt");
 		while (num_payments>0) {
 			PaymentAmount = (i * p) / (1 - Math.pow((1 + i),-n));
-			p = p - PaymentAmount + ((i/100)*p);
+			p = (p - PaymentAmount + ((i/100)*p));
 			n = n-1;
-			System.out.println("Number of Payments: " + num_payments);
-			System.out.println("Amount per payment: " + PaymentAmount);
+			fw.write("Number of Payments: " + num_payments + "\n");
+			fw.write("Amount per payment: " + PaymentAmount + "\n\n");
 			num_payments = num_payments - 1;
 		}
+		fw.close();
+		sc.close();
 	}
 }
